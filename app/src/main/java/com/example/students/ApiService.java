@@ -86,6 +86,10 @@ public class ApiService {
 
     }
 
+    public void cancel(){
+        requestQueue.cancelAll(requestTag);
+    }
+
 
     public interface SaveStudentCallback {
         public void onSuccess(Student student);
