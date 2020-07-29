@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-
 public class AddNewStudentFormActivity extends AppCompatActivity {
     private static final String TAG = "AddNewStudentFormActivi";
     private ApiService apiService;
@@ -50,7 +48,7 @@ public class AddNewStudentFormActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onError(VolleyError error) {
+                        public void onError(Exception error) {
                             Toast.makeText(AddNewStudentFormActivity.this, "unknown error", Toast.LENGTH_SHORT).show();
                         }
                     });

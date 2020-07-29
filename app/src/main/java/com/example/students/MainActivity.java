@@ -13,17 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,44 +46,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://expertdevelopers.ir/api/v1/")
-                .build();
 
-        RetrofitApiService retrofitApiService = retrofit.create(RetrofitApiService.class);
-
-        retrofitApiService.getStudents().enqueue(new Callback<List<Student>>() {
+        apiService.getStudentList(new ApiService.GetStudentListCallback() {
             @Override
-            public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
+            public void onSuccess(List<Student> students) {
                 recyclerView = findViewById(R.id.rv_main_students);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false));
-                studentAdapter = new StudentAdapter(response.body());
+                studentAdapter = new StudentAdapter(students);
                 recyclerView.setAdapter(studentAdapter);
             }
 
             @Override
-            public void onFailure(Call<List<Student>> call, Throwable t) {
+            public void onError(Exception error) {
                 Toast.makeText(MainActivity.this, "unknown error", Toast.LENGTH_SHORT).show();
+
             }
         });
-
-
-//        apiService.getStudentList(new ApiService.GetStudentListCallback() {
-//            @Override
-//            public void onSuccess(List<Student> students) {
-//                recyclerView = findViewById(R.id.rv_main_students);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false));
-//                studentAdapter = new StudentAdapter(students);
-//                recyclerView.setAdapter(studentAdapter);
-//            }
-//
-//            @Override
-//            public void onError(VolleyError error) {
-//                Toast.makeText(MainActivity.this, "unknown error", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
 
     }
 
