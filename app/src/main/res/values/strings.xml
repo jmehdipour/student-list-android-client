@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Students</string>
+    <string name="main_addStudent">Add Student</string>
+</resources>
